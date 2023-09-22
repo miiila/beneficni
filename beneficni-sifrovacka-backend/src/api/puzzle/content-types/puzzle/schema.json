@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "puzzles",
+  "info": {
+    "singularName": "puzzle",
+    "pluralName": "puzzles",
+    "displayName": "puzzle"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "url": {
+      "type": "string"
+    }
+  }
+}

@@ -388,6 +388,36 @@ export interface ApiPagePage extends Schema.CollectionType {
   };
 }
 
+export interface ApiPuzzlePuzzle extends Schema.CollectionType {
+  collectionName: 'puzzles';
+  info: {
+    singularName: 'puzzle';
+    pluralName: 'puzzles';
+    displayName: 'puzzle';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    url: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -714,6 +744,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::page.page': ApiPagePage;
+      'api::puzzle.puzzle': ApiPuzzlePuzzle;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
