@@ -18,3 +18,7 @@ primary_region = "ams"
 
 [env]
   DATABASE_CLIENT = "postgres"
+
+[mounts]
+  source="uploads"
+  destination="/beneficni/public/uploads"
