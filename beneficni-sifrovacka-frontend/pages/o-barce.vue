@@ -1,8 +1,6 @@
 <template>
   <div class="main">
-    <section class="content">
-      <div v-html="content" />
-    </section>
+    <div v-html="content" />
   </div>
 </template>
 
@@ -18,8 +16,10 @@ try {
 <style>
   .main img
   {
-      max-width: 50%;
-      float: right;
+      display: block;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
   }
 </style>
 

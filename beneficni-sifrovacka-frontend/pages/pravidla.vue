@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <section class="content">
-      <div v-html="content" />
-    </section>
+  <div class="main">
+    <div v-html="content" />
   </div>
 </template>
 
