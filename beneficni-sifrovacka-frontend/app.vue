@@ -24,6 +24,17 @@
       margin: 0;
   }
 
+  a
+  {
+      color: #000;
+      font-weight: bold;
+  }
+
+  a:hover
+  {
+      color: #F00;
+  }
+
   body
   {
       background: #FFF;
@@ -70,4 +81,5 @@
   {
       margin: 20px 0;
   }
+
 </style>

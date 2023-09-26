@@ -2,27 +2,11 @@
   <section>
     <nav id="navbar" class="navbar pt-4" role="navigation" aria-label="main navigation">
       <div class="menu">
-        <NuxtLink to="/o-barce" class="menu-item">
-          o barce
-        </NuxtLink>
-        <NuxtLink to="/pravidla" class="menu-item">
-          pravidla
-        </NuxtLink>
-        <NuxtLink v-if="!gameFinished" to="/registrace" class="menu-item">
-          Registrace
-        </NuxtLink>
-        <NuxtLink v-if="gameFinished" to="/sifry" class="menu-item">
-          Šifry
-        </NuxtLink>
-        <NuxtLink v-if="gameFinished" to="/statistiky" class="menu-item">
-          Statistiky
-        </NuxtLink>
-        <NuxtLink v-if="gameFinished" to="/vysledky" class="menu-item">
-          Výsledky
-        </NuxtLink>
-        <NuxtLink to="/tymy" class="menu-item">
-          týmy
-        </NuxtLink>
+        <template v-for="item in menuItems">
+          <NuxtLink :to="item.href" class="menu-item">
+            {{item.text}}
+          </NuxtLink>
+        </template>
       </div>
     </nav>
   </section>
@@ -31,8 +15,23 @@
 <script setup lang="ts">
 
 const config: { public: { gameFinished: boolean } } = useRuntimeConfig()
-const showNav = ref(false)
 const gameFinished = config.public.gameFinished
+
+const menuItems: Record<string, string>[] = [
+  {href: '/o-barce', text: 'o barce'},
+  {href: '/pravidla', text: 'pravidla'},
+]
+
+if (!gameFinished) {
+  menuItems.push({href: '/registrace', text: 'registrace'})
+}
+
+  menuItems.push({href: '/tymy', text: 'týmy'})
+
+if (gameFinished) {
+  menuItems.push({href: '/sifry', text: 'šifry'}, {href: '/statistiky', text: 'statistiky'}, {href: '/vysledky', text: 'výsledky'})
+}
+
 </script>
 
 <style>
@@ -47,6 +46,7 @@ const gameFinished = config.public.gameFinished
         border-top: black 1px solid;
         border-bottom: black 1px solid;
     }
+
   .menu-item
     {
         display: inline-block;
@@ -55,14 +55,21 @@ const gameFinished = config.public.gameFinished
         font-size: 150%;
             
     }
+
   .menu a
     {
         text-decoration: none;
         color: #000;
+        font-weight: normal;
     }
+
+  .menu a.router-link-active {
+      text-decoration: underline;
+    }
+
   .menu a:hover
     {
-        color: #F00;
+        color: #f00;
     }
 
 </style >
