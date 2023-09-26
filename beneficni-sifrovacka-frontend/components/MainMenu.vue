@@ -23,12 +23,6 @@
         <NuxtLink to="/tymy" class="menu-item">
           týmy
         </NuxtLink>
-        <NuxtLink to="/login" class="menu-item">
-          login
-        </NuxtLink>
-        <NuxtLink to="/login" class="menu-item">
-          hra
-        </NuxtLink>
       </div>
     </nav>
   </section>

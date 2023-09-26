@@ -1,6 +1,6 @@
 <template>
   <header>
-      <img src="./logo2.png">
+      <img :src="'/logo2.png'" />
       <h1>
           Benefiční šifrovačka<br>Divadla Barka
       </h1>
