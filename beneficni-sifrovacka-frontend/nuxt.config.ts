@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  css: [
+    '@/assets/normalize.css',
+    '@/assets/skeleton.css'
+  ],
   devtools: { enabled: true },
   runtimeConfig: {
     apiHost: 'http://localhost:1337',

@@ -1,14 +1,18 @@
 <template>
-  <header>
-      <img :src="'/logo2.png'" />
-      <h1>
-          Benefiční šifrovačka<br>Divadla Barka
-      </h1>
-  </header>
-  <div>
-    <MainMenu />
-    <div class="content">
-      <NuxtPage />
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns">
+      <header>
+        <img :src="'/logo2.png'" class="u-pull-left" />
+        <h1>
+            Benefiční šifrovačka<br>Divadla Barka
+        </h1>
+      </header>
+      <MainMenu />
+        <div class="content">
+          <NuxtPage />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,12 +22,6 @@
 
 
 <style>
-  *
-  {
-      padding: 0;
-      margin: 0;
-  }
-
   a
   {
       color: #000;
@@ -39,47 +37,31 @@
   {
       background: #FFF;
       font-family: Source Sans Pro;
-      margin: 0;
-      padding: 10px 0 0 0;
+      font-size: 1.7em;
   }
 
-  header
-  {
-      width: 1000px;
-      height: 200px;
-      background: #FFF;
-      margin-left: auto;
-      margin-right: auto;
-      
+  header {
+    padding-top: 1.5em;
+    padding-bottom: 2em;
   }
+
   header img
   {
-      height: 180px;
-      float: left;
+      height: 10em;
   }
 
   header h1
   {
-      font-size: 350%;
+      padding-top: 0.5em;
+      font-size: 3em;
       text-transform: uppercase;
-      padding: 20px;
-      margin-left: 20px;
       text-align: center;
-      font-weight: 100;
   }
 
   .content
   {
-      width: 1000px;
-      padding-top: 20px;
-      background: #FFF;
-      margin-left: auto;
-      margin-right: auto;
+      padding-top: 2em;
   }
 
-  .content p
-  {
-      margin: 20px 0;
-  }
 
 </style>

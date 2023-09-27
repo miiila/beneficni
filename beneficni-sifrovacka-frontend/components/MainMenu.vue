@@ -1,11 +1,13 @@
 <template>
   <section>
-    <nav id="navbar" class="navbar pt-4" role="navigation" aria-label="main navigation">
-      <div class="menu">
+    <nav id="navbar" role="navigation" aria-label="main navigation">
+      <div class="row menu">
         <template v-for="item in menuItems">
-          <NuxtLink :to="item.href" class="menu-item">
-            {{item.text}}
-          </NuxtLink>
+          <div class="three columns">
+            <NuxtLink :to="item.href" class="menu-item">
+              {{item.text}}
+            </NuxtLink>
+          </div>
         </template>
       </div>
     </nav>
@@ -37,11 +39,6 @@ if (gameFinished) {
 <style>
   .menu
     {
-        width: 100%;
-        height: 50px;
-        background: #FFF;
-        margin-left: auto;
-        margin-right: auto;
         text-align: center;
         border-top: black 1px solid;
         border-bottom: black 1px solid;
@@ -49,9 +46,7 @@ if (gameFinished) {
 
   .menu-item
     {
-        display: inline-block;
         text-transform: uppercase;
-        padding: 10px 20px 10px 20px;
         font-size: 150%;
             
     }
@@ -59,17 +54,11 @@ if (gameFinished) {
   .menu a
     {
         text-decoration: none;
-        color: #000;
         font-weight: normal;
     }
 
   .menu a.router-link-active {
       text-decoration: underline;
-    }
-
-  .menu a:hover
-    {
-        color: #f00;
     }
 
 </style >
