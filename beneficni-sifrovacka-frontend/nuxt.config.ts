@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   runtimeConfig: {
-    apiHost: 'http://localhost:1337',
+    apiHost: 'http://127.0.0.1:1337',
     apiBase: 'api',
     pageMap: {
       pravidla: 1,
