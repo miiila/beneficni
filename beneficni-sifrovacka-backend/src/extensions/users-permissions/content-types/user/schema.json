@@ -31,7 +31,7 @@
     },
     "password": {
       "type": "password",
-      "minLength": 6,
+      "minLength": 1,
       "configurable": false,
       "private": true,
       "searchable": false
@@ -65,7 +65,7 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "teamMembers": {
+    "members": {
       "type": "json",
       "required": true
     }

@@ -660,7 +660,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     password: Attribute.Password &
       Attribute.Private &
       Attribute.SetMinMaxLength<{
-        minLength: 6;
+        minLength: 1;
       }>;
     resetPasswordToken: Attribute.String & Attribute.Private;
     confirmationToken: Attribute.String & Attribute.Private;
@@ -671,7 +671,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    teamMembers: Attribute.JSON & Attribute.Required;
+    members: Attribute.JSON & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
