@@ -8,10 +8,9 @@ export default defineEventHandler(async (_event) => {
       id: team.id,
       username: team.username,
       name: team.name,
-      members: team.members,
+      members: team.members
     }
   })
 
   return users
 })
-

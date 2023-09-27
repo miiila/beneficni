@@ -2,13 +2,13 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns">
-      <header>
-        <img :src="'/logo2.png'" class="u-pull-left" />
-        <h1>
+        <header>
+          <img :src="'/logo2.png'" class="u-pull-left">
+          <h1>
             Benefiční šifrovačka<br>Divadla Barka
-        </h1>
-      </header>
-      <MainMenu />
+          </h1>
+        </header>
+        <MainMenu />
         <div class="content">
           <NuxtPage />
         </div>
@@ -19,7 +19,6 @@
 <script setup lang="ts">
 
 </script>
-
 
 <style>
   a
