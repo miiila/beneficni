@@ -3,11 +3,11 @@
     <nav id="navbar" role="navigation" aria-label="main navigation">
       <div class="row">
         <div class="twelve columns menu">
-        <template v-for="item in menuItems" :key="item.href">
+          <template v-for="item in menuItems" :key="item.href">
             <NuxtLink :to="item.href" class="menu-item">
               {{ item.text }}
             </NuxtLink>
-        </template>
+          </template>
         </div>
       </div>
     </nav>

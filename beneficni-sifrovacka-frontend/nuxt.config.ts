@@ -11,7 +11,8 @@ export default defineNuxtConfig({
     apiBase: 'api',
     pageMap: {
       pravidla: 1,
-      'o-barce': 2
+      'o-barce': 2,
+      main: 3
     },
     public: {
       registrationFinished: false,

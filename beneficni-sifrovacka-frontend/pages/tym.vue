@@ -80,7 +80,7 @@ async function fetchTeam () {
   team.value = await $fetch('/api/team', { method: 'GET', headers: { Authorization: `Bearer ${authStore.jwt}` } })
 }
 
-function teamLogin(currentTeam: Team) {
+function teamLogin (currentTeam: Team) {
   team.value = currentTeam
 }
 

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="twelve columns">
         <header>
-          <img :src="'/logo2.png'" class="u-pull-left">
+          <a href="/"><img :src="'/logo2.png'" class="u-pull-left"></a>
           <h1>
             Benefiční šifrovačka<br>Divadla Barka
           </h1>
