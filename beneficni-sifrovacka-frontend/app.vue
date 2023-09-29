@@ -2,13 +2,13 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns">
-      <header>
-        <img :src="'/logo2.png'" class="u-pull-left" />
-        <h1>
+        <header>
+          <img :src="'/logo2.png'" class="u-pull-left">
+          <h1>
             Benefiční šifrovačka<br>Divadla Barka
-        </h1>
-      </header>
-      <MainMenu />
+          </h1>
+        </header>
+        <MainMenu />
         <div class="content">
           <NuxtPage />
         </div>
@@ -20,7 +20,6 @@
 
 </script>
 
-
 <style>
   a
   {
@@ -30,7 +29,7 @@
 
   a:hover
   {
-      color: #F00;
+      color: #ea1a21;
   }
 
   body
@@ -63,5 +62,17 @@
       padding-top: 2em;
   }
 
+  .button.button-primary, button.button-primary, input[type="submit"].button-primary, input[type="reset"].button-primary, input[type="button"].button-primary
+  {
+    background-color: #ea1a21;
+    border-color: #ea1a21;
+  }
+
+  .button.button-primary:hover, button.button-primary:hover, input[type="submit"].button-primary:hover, input[type="reset"].button-primary:hover, input[type="button"].button-primary:hover, .button.button-primary:focus, button.button-primary:focus, input[type="submit"].button-primary:focus, input[type="reset"].button-primary:focus, input[type="button"].button-primary:focus
+  {
+    filter: brightness(85%);
+    background-color: #ea1a21;
+    border-color: #ea1a21;
+  }
 
 </style>

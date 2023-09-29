@@ -22,4 +22,3 @@ try {
       margin-right: auto;
   }
 </style>
-

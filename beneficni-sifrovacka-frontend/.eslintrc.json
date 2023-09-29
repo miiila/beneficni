@@ -1,0 +1,33 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "standard-with-typescript",
+        "plugin:vue/vue3-essential",
+        "@nuxtjs/eslint-config-typescript"
+    ],
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["tsconfig.json"],
+        "parser": "@typescript-eslint/parser",
+        "extraFileExtensions": ["vue"]
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+      "vue/singleline-html-element-content-newline": "off"
+    },
+    "overrides": [
+      {
+        "files": ["server/**"],
+        "rules": {
+          "no-console": "off"
+        }
+      }
+    ]
+}

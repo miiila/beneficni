@@ -5,8 +5,9 @@ export default defineNuxtConfig({
     '@/assets/skeleton.css'
   ],
   devtools: { enabled: true },
+  modules: ['nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/eslint-module'],
   runtimeConfig: {
-    apiHost: 'http://localhost:1337',
+    apiHost: 'http://127.0.0.1:1337',
     apiBase: 'api',
     pageMap: {
       pravidla: 1,
@@ -26,7 +27,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         { rel: 'icon', type: 'image/png', href: '/favicon.ico' },
-        { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: 'manifest', href: '/site.webmanifest' }
       ]
     }
   }
