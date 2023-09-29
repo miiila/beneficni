@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <LoginForm v-if="!authStore.team" @team-login="fetchTeam()" />
+    <LoginForm v-if="!authStore.team" @team-login="teamLogin" />
     <div v-else>
       <section class="block">
         <div class="block">
@@ -78,6 +78,10 @@ const value = `SPD*1.0*ACC:CZ3720100000002201897677*AM:200.00*CC:CZK*MSG:Sifrova
 
 async function fetchTeam () {
   team.value = await $fetch('/api/team', { method: 'GET', headers: { Authorization: `Bearer ${authStore.jwt}` } })
+}
+
+function teamLogin(currentTeam: Team) {
+  team.value = currentTeam
 }
 
 async function updateTeam (teamForm: TeamForm) {

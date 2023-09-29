@@ -1,14 +1,14 @@
 <template>
   <section>
     <nav id="navbar" role="navigation" aria-label="main navigation">
-      <div class="row menu">
+      <div class="row">
+        <div class="twelve columns menu">
         <template v-for="item in menuItems" :key="item.href">
-          <div class="two columns">
             <NuxtLink :to="item.href" class="menu-item">
               {{ item.text }}
             </NuxtLink>
-          </div>
         </template>
+        </div>
       </div>
     </nav>
   </section>
@@ -45,12 +45,14 @@ if (gameFinished) {
         border-bottom: black 1px solid;
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
     }
 
   .menu-item
     {
         text-transform: uppercase;
         font-size: 150%;
+        flex-grow: 1;
     }
 
   .menu a
