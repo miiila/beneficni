@@ -68,6 +68,10 @@
     "members": {
       "type": "json",
       "required": true
+    },
+    "paid": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
