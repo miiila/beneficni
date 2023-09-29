@@ -27,7 +27,7 @@
           class="u-full-width"
           type="password"
           placeholder="heslo"
-          required
+          :required="required"
         >
       </div>
       <div class="six columns">
@@ -52,7 +52,7 @@
     </div>
     <div class="row">
       <div class="twelve columns">
-        <input class="button-primary u-full-width" type="submit" value="Zaregistrovat">
+        <input class="button-primary u-full-width" type="submit" :value="buttonText">
       </div>
     </div>
   </form>

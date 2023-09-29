@@ -3,7 +3,7 @@
     <nav id="navbar" role="navigation" aria-label="main navigation">
       <div class="row menu">
         <template v-for="item in menuItems" :key="item.href">
-          <div class="three columns">
+          <div class="two columns">
             <NuxtLink :to="item.href" class="menu-item">
               {{ item.text }}
             </NuxtLink>
@@ -29,6 +29,7 @@ if (!gameFinished) {
 }
 
 menuItems.push({ href: '/tymy', text: 'týmy' })
+menuItems.push({ href: '/tym', text: 'Váš tým' })
 
 if (gameFinished) {
   menuItems.push({ href: '/sifry', text: 'šifry' }, { href: '/statistiky', text: 'statistiky' }, { href: '/vysledky', text: 'výsledky' })
@@ -42,13 +43,14 @@ if (gameFinished) {
         text-align: center;
         border-top: black 1px solid;
         border-bottom: black 1px solid;
+        display: flex;
+        justify-content: center;
     }
 
   .menu-item
     {
         text-transform: uppercase;
         font-size: 150%;
-
     }
 
   .menu a
