@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "puzzles_teams",
+  "info": {
+    "singularName": "puzzles-team",
+    "pluralName": "puzzles-teams",
+    "displayName": "PuzzlesTeam"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "puzzles_teams"
+    },
+    "puzzle": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::puzzle.puzzle",
+      "inversedBy": "puzzles_teams"
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "locked",
+        "open",
+        "solved"
+      ],
+      "required": true
+    }
+  }
+}

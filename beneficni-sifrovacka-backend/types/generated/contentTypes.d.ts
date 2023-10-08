@@ -361,63 +361,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiPagePage extends Schema.CollectionType {
-  collectionName: 'pages';
-  info: {
-    singularName: 'page';
-    pluralName: 'pages';
-    displayName: 'page';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    content: Attribute.RichText;
-    afterGame: Attribute.Boolean & Attribute.DefaultTo<false>;
-    authOnly: Attribute.Boolean & Attribute.DefaultTo<false>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPuzzlePuzzle extends Schema.CollectionType {
-  collectionName: 'puzzles';
-  info: {
-    singularName: 'puzzle';
-    pluralName: 'puzzles';
-    displayName: 'puzzle';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    url: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -717,6 +660,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     members: Attribute.JSON & Attribute.Required;
     paid: Attribute.Boolean & Attribute.DefaultTo<false>;
+    puzzles_teams: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::puzzles-team.puzzles-team'
+    >;
+    team_actions: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::team-action.team-action'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -734,6 +687,199 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 50;
+      }>;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPagePage extends Schema.CollectionType {
+  collectionName: 'pages';
+  info: {
+    singularName: 'page';
+    pluralName: 'pages';
+    displayName: 'page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    slug: Attribute.String & Attribute.Required & Attribute.Unique;
+    name: Attribute.String & Attribute.Required;
+    content: Attribute.RichText;
+    afterGame: Attribute.Boolean & Attribute.DefaultTo<false>;
+    authOnly: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPuzzlePuzzle extends Schema.CollectionType {
+  collectionName: 'puzzles';
+  info: {
+    singularName: 'puzzle';
+    pluralName: 'puzzles';
+    displayName: 'puzzle';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    url: Attribute.String;
+    puzzles_teams: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::puzzles-team.puzzles-team'
+    >;
+    team_actions: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::team-action.team-action'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
+  collectionName: 'puzzles_teams';
+  info: {
+    singularName: 'puzzles-team';
+    pluralName: 'puzzles-teams';
+    displayName: 'PuzzlesTeam';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    puzzle: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
+      Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTeamActionTeamAction extends Schema.CollectionType {
+  collectionName: 'team_actions';
+  info: {
+    singularName: 'team-action';
+    pluralName: 'team-actions';
+    displayName: 'TeamAction';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    puzzle: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    timestamp: Attribute.DateTime;
+    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::team-action.team-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::team-action.team-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Shared {
     export interface ContentTypes {
@@ -744,14 +890,16 @@ declare module '@strapi/strapi' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::page.page': ApiPagePage;
-      'api::puzzle.puzzle': ApiPuzzlePuzzle;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::page.page': ApiPagePage;
+      'api::puzzle.puzzle': ApiPuzzlePuzzle;
+      'api::puzzles-team.puzzles-team': ApiPuzzlesTeamPuzzlesTeam;
+      'api::team-action.team-action': ApiTeamActionTeamAction;
     }
   }
 }
