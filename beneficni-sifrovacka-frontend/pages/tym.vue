@@ -74,7 +74,7 @@ if (authStore.team !== null) {
   await fetchTeam()
 }
 
-const value = `SPD*1.0*ACC:CZ3720100000002201897677*AM:200.00*CC:CZK*MSG:Sifrovacka*X-VS:${202310000 + team.value?.id}`
+const value = `SPD*1.0*ACC:CZ3920100000002302379553*AM:200.00*CC:CZK*MSG:Sifrovacka*X-VS:${202310000 + team.value?.id}`
 
 async function fetchTeam () {
   team.value = await $fetch('/api/team', { method: 'GET', headers: { Authorization: `Bearer ${authStore.jwt}` } })
