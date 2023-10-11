@@ -7,7 +7,7 @@
           <div v-if="!team?.paid">
             <div class="row">
               <div class="eight columns">
-                <div>Dobrovolné startovné prosím uhraďte na účet Divadla Barka z.ú.: <strong>2201897677 / 2010</strong>.</div>
+                <div>Dobrovolné startovné prosím uhraďte na účet Divadla Barka z.ú.: <strong>2302379553 / 2010</strong>.</div>
                 <div>Váš variabilní symbol je: <strong>{{ 202310000 + team?.id }}</strong>.</div>
                 <div>Do avíza prosím uveďte slovo “Šifrovačka”.</div>
               </div>
