@@ -764,6 +764,7 @@ export interface ApiPuzzlePuzzle extends Schema.CollectionType {
     singularName: 'puzzle';
     pluralName: 'puzzles';
     displayName: 'puzzle';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -775,11 +776,15 @@ export interface ApiPuzzlePuzzle extends Schema.CollectionType {
       'oneToMany',
       'api::puzzles-team.puzzles-team'
     >;
+    description: Attribute.RichText;
+    logo: Attribute.Media;
     team_actions: Attribute.Relation<
       'api::puzzle.puzzle',
       'oneToMany',
       'api::team-action.team-action'
     >;
+    solution: Attribute.String;
+    solution_details: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -804,9 +809,10 @@ export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
     singularName: 'puzzles-team';
     pluralName: 'puzzles-teams';
     displayName: 'PuzzlesTeam';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     team: Attribute.Relation<
@@ -814,16 +820,15 @@ export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
+      Attribute.Required;
     puzzle: Attribute.Relation<
       'api::puzzles-team.puzzles-team',
       'manyToOne',
       'api::puzzle.puzzle'
     >;
-    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
-      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::puzzles-team.puzzles-team',
       'oneToOne',
@@ -845,9 +850,10 @@ export interface ApiTeamActionTeamAction extends Schema.CollectionType {
     singularName: 'team-action';
     pluralName: 'team-actions';
     displayName: 'TeamAction';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     team: Attribute.Relation<
@@ -855,16 +861,15 @@ export interface ApiTeamActionTeamAction extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    timestamp: Attribute.DateTime;
+    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
     puzzle: Attribute.Relation<
       'api::team-action.team-action',
       'manyToOne',
       'api::puzzle.puzzle'
     >;
-    timestamp: Attribute.DateTime;
-    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::team-action.team-action',
       'oneToOne',

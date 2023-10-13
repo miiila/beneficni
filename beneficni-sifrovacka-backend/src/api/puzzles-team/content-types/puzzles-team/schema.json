@@ -4,10 +4,11 @@
   "info": {
     "singularName": "puzzles-team",
     "pluralName": "puzzles-teams",
-    "displayName": "PuzzlesTeam"
+    "displayName": "PuzzlesTeam",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -15,12 +16,6 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "puzzles_teams"
-    },
-    "puzzle": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::puzzle.puzzle",
       "inversedBy": "puzzles_teams"
     },
     "state": {
@@ -31,6 +26,12 @@
         "solved"
       ],
       "required": true
+    },
+    "puzzle": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::puzzle.puzzle",
+      "inversedBy": "puzzles_teams"
     }
   }
 }
