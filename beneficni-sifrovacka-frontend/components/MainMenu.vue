@@ -44,6 +44,11 @@ if (!registrationFinished) {
 menuItems.push({ href: '/tymy', text: 'týmy' })
 menuItems.push({ href: '/tym', text: 'Váš tým' })
 
+if (gameStarted) {
+  menuItems.push({ href: '/hra', text: 'hra' })
+  menuItems.push({ href: '/vysledky', text: 'vysledky' })
+}
+
 if (gameFinished) {
   menuItems.push({ href: '/sifry', text: 'šifry' }, { href: '/statistiky', text: 'statistiky' }, { href: '/vysledky', text: 'výsledky' })
 }
