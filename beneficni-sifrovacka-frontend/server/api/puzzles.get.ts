@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
       return {
         id: puzzleState.puzzle.id,
         stateId: puzzleState.id,
-        url: puzzleState.state === 'open' ? puzzleState.puzzle.url : '',
+        url: puzzleState.state !== 'locked' ? puzzleState.puzzle.url : '',
         logoUrl: `${config.apiHost}${puzzleState.puzzle.logo?.url}` ?? '',
         description: puzzleState.puzzle.description ?? '',
         state: puzzleState.state,

@@ -34,8 +34,11 @@ export default defineEventHandler(async (event) => {
     // Return new state
     const newAction = {}
     newAction[teamAction.data.attributes.action] = teamAction.data.attributes.timestamp
-    const newState = { puzzleUpdates: { state: puzzleState.data.attributes.state, url: puzzle.data.attributes.url }, actionsUpdates: [newAction] }
+    const newState = { puzzleUpdates: { state: puzzleState.data.attributes.state, url: puzzle.data.attributes.url }, actionsUpdates: newAction }
 
+    if (body.state === 'solved') {
+      newState.puzzleUpdates.solution = puzzle.data.attributes.solution
+    }
     return newState
   } catch (err: any) {
     if (err.statusCode === 400) {

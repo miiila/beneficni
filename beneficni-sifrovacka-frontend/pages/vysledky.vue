@@ -4,7 +4,7 @@
   </div>
   <ol v-else>
     <li v-for="result in results" :key="result.teamName">
-      {{result.teamName}} - {{result.solved}} šifer v čase {{formatTimestamp(result.totalTime)}}
+      {{ result.teamName }} - {{ result.solved }} šifer v čase {{ formatTimestamp(result.totalTime) }}
     </li>
   </ol>
 </template>

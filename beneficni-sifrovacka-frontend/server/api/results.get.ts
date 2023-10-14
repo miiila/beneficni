@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
   const query = qs.stringify({ filters: { action: { $ne: 'failed' } }, populate: { puzzle: { fields: ['id'] }, team: { fields: ['username'] } } }, {
     encodeValuesOnly: true // prettify URL
   })
-
   const puzzleStatesUrl = `${config.apiHost}/${config.apiBase}/team-actions?${query}`
   const headers = getHeaders(event)
 
@@ -28,10 +27,9 @@ export default defineEventHandler(async (event) => {
       return actions
     }, {})
 
-
     const results = Object.entries(actions).reduce((results: any, [teamName, teamActions]: any) => {
       if (!results[teamName]) {
-        results[teamName] = {solved: 0, totalTime: new Date(0)}
+        results[teamName] = { solved: 0, totalTime: new Date(0) }
       }
       for (const puzzleActions of Object.values(teamActions)) {
         if (puzzleActions.solved) {
@@ -44,7 +42,7 @@ export default defineEventHandler(async (event) => {
     }, {})
 
     const resultsArray = Object.entries(results).map(([teamName, teamResults]: any) => {
-      return {teamName, ...teamResults}
+      return { teamName, ...teamResults }
     })
 
     const sortedResults = resultsArray.sort((a: any, b: any) => {

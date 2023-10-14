@@ -8,6 +8,7 @@ export interface Puzzle {
   description: string
   state: 'locked' | 'open' | 'solved'
   actions: Record<'unlocked' | 'solved' | 'failed', Date>
+  solution: string
 }
 
 export interface TeamAction {

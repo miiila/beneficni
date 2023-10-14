@@ -361,6 +361,160 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiPagePage extends Schema.CollectionType {
+  collectionName: 'pages';
+  info: {
+    singularName: 'page';
+    pluralName: 'pages';
+    displayName: 'page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    slug: Attribute.String & Attribute.Required & Attribute.Unique;
+    name: Attribute.String & Attribute.Required;
+    content: Attribute.RichText;
+    afterGame: Attribute.Boolean & Attribute.DefaultTo<false>;
+    authOnly: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPuzzlePuzzle extends Schema.CollectionType {
+  collectionName: 'puzzles';
+  info: {
+    singularName: 'puzzle';
+    pluralName: 'puzzles';
+    displayName: 'puzzle';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    url: Attribute.String;
+    puzzles_teams: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::puzzles-team.puzzles-team'
+    >;
+    description: Attribute.RichText;
+    logo: Attribute.Media;
+    team_actions: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::team-action.team-action'
+    >;
+    solution: Attribute.String;
+    solution_details: Attribute.RichText;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
+  collectionName: 'puzzles_teams';
+  info: {
+    singularName: 'puzzles-team';
+    pluralName: 'puzzles-teams';
+    displayName: 'PuzzlesTeam';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
+      Attribute.Required;
+    puzzle: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTeamActionTeamAction extends Schema.CollectionType {
+  collectionName: 'team_actions';
+  info: {
+    singularName: 'team-action';
+    pluralName: 'team-actions';
+    displayName: 'TeamAction';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    timestamp: Attribute.DateTime;
+    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
+    puzzle: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::team-action.team-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::team-action.team-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -731,160 +885,6 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
-export interface ApiPagePage extends Schema.CollectionType {
-  collectionName: 'pages';
-  info: {
-    singularName: 'page';
-    pluralName: 'pages';
-    displayName: 'page';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    slug: Attribute.String & Attribute.Required & Attribute.Unique;
-    name: Attribute.String & Attribute.Required;
-    content: Attribute.RichText;
-    afterGame: Attribute.Boolean & Attribute.DefaultTo<false>;
-    authOnly: Attribute.Boolean & Attribute.DefaultTo<false>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPuzzlePuzzle extends Schema.CollectionType {
-  collectionName: 'puzzles';
-  info: {
-    singularName: 'puzzle';
-    pluralName: 'puzzles';
-    displayName: 'puzzle';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    url: Attribute.String;
-    puzzles_teams: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToMany',
-      'api::puzzles-team.puzzles-team'
-    >;
-    description: Attribute.RichText;
-    logo: Attribute.Media;
-    team_actions: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToMany',
-      'api::team-action.team-action'
-    >;
-    solution: Attribute.String;
-    solution_details: Attribute.RichText;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::puzzle.puzzle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
-  collectionName: 'puzzles_teams';
-  info: {
-    singularName: 'puzzles-team';
-    pluralName: 'puzzles-teams';
-    displayName: 'PuzzlesTeam';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    team: Attribute.Relation<
-      'api::puzzles-team.puzzles-team',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
-      Attribute.Required;
-    puzzle: Attribute.Relation<
-      'api::puzzles-team.puzzles-team',
-      'manyToOne',
-      'api::puzzle.puzzle'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::puzzles-team.puzzles-team',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::puzzles-team.puzzles-team',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTeamActionTeamAction extends Schema.CollectionType {
-  collectionName: 'team_actions';
-  info: {
-    singularName: 'team-action';
-    pluralName: 'team-actions';
-    displayName: 'TeamAction';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    team: Attribute.Relation<
-      'api::team-action.team-action',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    timestamp: Attribute.DateTime;
-    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
-    puzzle: Attribute.Relation<
-      'api::team-action.team-action',
-      'manyToOne',
-      'api::puzzle.puzzle'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::team-action.team-action',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::team-action.team-action',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/strapi' {
   export module Shared {
     export interface ContentTypes {
@@ -895,16 +895,16 @@ declare module '@strapi/strapi' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::page.page': ApiPagePage;
+      'api::puzzle.puzzle': ApiPuzzlePuzzle;
+      'api::puzzles-team.puzzles-team': ApiPuzzlesTeamPuzzlesTeam;
+      'api::team-action.team-action': ApiTeamActionTeamAction;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::page.page': ApiPagePage;
-      'api::puzzle.puzzle': ApiPuzzlePuzzle;
-      'api::puzzles-team.puzzles-team': ApiPuzzlesTeamPuzzlesTeam;
-      'api::team-action.team-action': ApiTeamActionTeamAction;
     }
   }
 }
