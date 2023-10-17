@@ -8,6 +8,15 @@
               {{ item.text }}
             </NuxtLink>
           </template>
+          <NuxtLink v-if="gameStarted && !gameFinished && authStore.team" to="/hra" class="menu-item">
+            hra
+          </NuxtLink>
+          <NuxtLink v-if="gameStarted && authStore.team" to="/vysledky" class="menu-item">
+            výsledky
+          </NuxtLink>
+          <NuxtLink v-if="gameStarted && authStore.team" to="/vase-akce" class="menu-item">
+            vaše akce
+          </NuxtLink>
         </div>
       </div>
     </nav>
@@ -15,16 +24,20 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore, type AuthStore } from '~/stores/auth'
+const authStore: AuthStore = useAuthStore()
 
-const config: { public: { gameFinished: boolean } } = useRuntimeConfig()
+const config: { public: { gameFinished: boolean, registrationFinished: boolean, gameStarted: boolean } } = useRuntimeConfig()
+const registrationFinished = config.public.registrationFinished
 const gameFinished = config.public.gameFinished
+const gameStarted = config.public.gameStarted
 
 const menuItems: Array<Record<string, string>> = [
   { href: '/o-barce', text: 'o barce' },
   { href: '/pravidla', text: 'pravidla' }
 ]
 
-if (!gameFinished) {
+if (!registrationFinished) {
   menuItems.push({ href: '/registrace', text: 'registrace' })
 }
 
