@@ -20,6 +20,7 @@
           placeholder="heslo"
           required
         >
+        <div v-if="failedLogin" class="alert">Špatný email nebo heslo.</div>
         <input class="button-primary u-full-width" type="submit" value="Přihlásit se">
       </div>
     </div>
@@ -36,6 +37,8 @@ const router = useRouter()
 const identifier = ref('')
 const password = ref('')
 
+const failedLogin = ref(false)
+
 async function login () {
   try {
     const res: any = await $fetch('/api/login', { method: 'POST', body: { identifier: identifier.value, password: password.value } })
@@ -43,7 +46,15 @@ async function login () {
     emit('team-login', res.user)
     await router.push('/tym')
   } catch (err: any) {
-    console.log(err)
+    if (err.status === 400) {
+       failedLogin.value = true
+     }
   }
 }
 </script>
+<style>
+   .alert {
+     color: #ea1a21;
+     text-transform: uppercase;
+   }
+</style>
