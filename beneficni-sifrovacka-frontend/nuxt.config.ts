@@ -16,7 +16,8 @@ export default defineNuxtConfig({
     },
     public: {
       registrationFinished: false,
-      gameFinished: false
+      gameFinished: false,
+      gameStarted: false
     }
   },
   app: {
