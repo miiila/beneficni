@@ -63,7 +63,6 @@ async function unlockPuzzle (puzzleStateId: number): Promise<void> {
   const body = { state: 'open', puzzleStateId, teamId: authStore.team.id, puzzleId: puzzle.id }
   const newState = await $fetch('/api/update-puzzle-state/', { method: 'POST', body, headers: { Authorization: `Bearer ${authStore.jwt}` } })
 
-  console.log(newState)
   unlockTime.value = newState.actionsUpdates.unlocked
   puzzleUrl.value = newState.puzzleUpdates.url
   puzzleState.value = newState.puzzleUpdates.state

@@ -34,7 +34,6 @@ export default defineEventHandler(async (event) => {
       for (const puzzleActions of Object.values(teamActions)) {
         if (puzzleActions.solved) {
           results[teamName].solved++
-          console.log(puzzleActions.solved, puzzleActions.unlocked, puzzleActions.solved - puzzleActions.unlocked)
           results[teamName].totalTime = new Date(results[teamName].totalTime.getTime() + (puzzleActions.solved - puzzleActions.unlocked))
         }
       }
