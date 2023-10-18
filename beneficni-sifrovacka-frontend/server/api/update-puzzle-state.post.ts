@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  console.log(await readBody(event))
   const body = await readBody(event)
   const headers = getHeaders(event)
 
@@ -11,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const puzzlesTeamsUrl = `${config.apiHost}/${config.apiBase}/puzzles-teams/${body.puzzleStateId}`
     const teamActionsUrl = `${config.apiHost}/${config.apiBase}/team-actions`
     const stateUpdate = { state: body.state }
-    const actionUpdate = { action: 'unlocked', timestamp: Date.now(), team: body.teamId, puzzle: body.puzzleId }
+    const actionUpdate = { action: 'unlocked', timestamp: Date.now(), team: body.teamId, puzzle: body.puzzleId, payload: body.solution }
     // Solving puzzle
     if (body.state === 'solved') {
       // Wrong solution

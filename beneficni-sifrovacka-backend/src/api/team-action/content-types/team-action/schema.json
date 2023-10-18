@@ -34,6 +34,9 @@
       "relation": "manyToOne",
       "target": "api::puzzle.puzzle",
       "inversedBy": "team_actions"
+    },
+    "payload": {
+      "type": "string"
     }
   }
 }
