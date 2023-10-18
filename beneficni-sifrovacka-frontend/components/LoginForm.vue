@@ -47,8 +47,9 @@ async function login () {
     await router.push('/tym')
   } catch (err: any) {
     if (err.status === 400) {
-       failedLogin.value = true
-     }
+      failedLogin.value = true
+    }
+    console.log(err)
   }
 }
 </script>

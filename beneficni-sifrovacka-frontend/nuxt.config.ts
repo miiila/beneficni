@@ -4,7 +4,13 @@ export default defineNuxtConfig({
     '@/assets/normalize.css',
     '@/assets/skeleton.css'
   ],
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    }
+  },
   modules: ['nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/eslint-module'],
   runtimeConfig: {
     apiHost: 'http://127.0.0.1:1337',

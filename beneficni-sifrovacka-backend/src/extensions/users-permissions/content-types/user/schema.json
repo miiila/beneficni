@@ -72,6 +72,18 @@
     "paid": {
       "type": "boolean",
       "default": false
+    },
+    "puzzles_teams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::puzzles-team.puzzles-team",
+      "mappedBy": "team"
+    },
+    "team_actions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-action.team-action",
+      "mappedBy": "team"
     }
   }
 }

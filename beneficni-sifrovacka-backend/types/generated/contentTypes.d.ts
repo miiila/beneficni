@@ -394,12 +394,27 @@ export interface ApiPuzzlePuzzle extends Schema.CollectionType {
     singularName: 'puzzle';
     pluralName: 'puzzles';
     displayName: 'puzzle';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     url: Attribute.String;
+    puzzles_teams: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::puzzles-team.puzzles-team'
+    >;
+    description: Attribute.RichText;
+    logo: Attribute.Media;
+    team_actions: Attribute.Relation<
+      'api::puzzle.puzzle',
+      'oneToMany',
+      'api::team-action.team-action'
+    >;
+    solution: Attribute.String;
+    solution_details: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -411,6 +426,88 @@ export interface ApiPuzzlePuzzle extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::puzzle.puzzle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPuzzlesTeamPuzzlesTeam extends Schema.CollectionType {
+  collectionName: 'puzzles_teams';
+  info: {
+    singularName: 'puzzles-team';
+    pluralName: 'puzzles-teams';
+    displayName: 'PuzzlesTeam';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    state: Attribute.Enumeration<['locked', 'open', 'solved']> &
+      Attribute.Required;
+    puzzle: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::puzzles-team.puzzles-team',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTeamActionTeamAction extends Schema.CollectionType {
+  collectionName: 'team_actions';
+  info: {
+    singularName: 'team-action';
+    pluralName: 'team-actions';
+    displayName: 'TeamAction';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    team: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    timestamp: Attribute.DateTime;
+    action: Attribute.Enumeration<['unlocked', 'solved', 'failed']>;
+    puzzle: Attribute.Relation<
+      'api::team-action.team-action',
+      'manyToOne',
+      'api::puzzle.puzzle'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::team-action.team-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::team-action.team-action',
       'oneToOne',
       'admin::user'
     > &
@@ -717,6 +814,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     members: Attribute.JSON & Attribute.Required;
     paid: Attribute.Boolean & Attribute.DefaultTo<false>;
+    puzzles_teams: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::puzzles-team.puzzles-team'
+    >;
+    team_actions: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::team-action.team-action'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -727,6 +834,50 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 50;
+      }>;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -746,6 +897,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::page.page': ApiPagePage;
       'api::puzzle.puzzle': ApiPuzzlePuzzle;
+      'api::puzzles-team.puzzles-team': ApiPuzzlesTeamPuzzlesTeam;
+      'api::team-action.team-action': ApiTeamActionTeamAction;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;

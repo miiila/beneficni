@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_actions",
+  "info": {
+    "singularName": "team-action",
+    "pluralName": "team-actions",
+    "displayName": "TeamAction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "team_actions"
+    },
+    "timestamp": {
+      "type": "datetime"
+    },
+    "action": {
+      "type": "enumeration",
+      "enum": [
+        "unlocked",
+        "solved",
+        "failed"
+      ]
+    },
+    "puzzle": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::puzzle.puzzle",
+      "inversedBy": "team_actions"
+    }
+  }
+}

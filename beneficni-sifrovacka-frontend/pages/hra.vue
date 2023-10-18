@@ -8,7 +8,7 @@
   <table v-else>
     <tbody>
       <template v-for="puzzle in puzzles" :key="puzzle.id">
-        {{ puzzle }}
+        <Puzzle :puzzle="puzzle" />
       </template>
     </tbody>
   </table>
