@@ -32,7 +32,11 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    return puzzles
+    const puzzlesSorted = puzzles.sort((a: any, b: any) => {
+      return a.id - b.id
+    })
+
+    return puzzlesSorted
   } catch (err: any) {
     console.error(err)
     throw createError({ statusCode: err.data?.error.status, statusMessage: 'Something bad happened when fetching the team' })
