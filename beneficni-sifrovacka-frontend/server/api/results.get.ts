@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const config: { public: { gameFinished: boolean, registrationFinished: boolean, gameStarted: boolean } } = useRuntimeConfig()
   if (!config.public.gameStarted) {
     return []
-  } 
+  }
 
   const query = qs.stringify({ filters: { action: { $ne: 'failed' } }, populate: { puzzle: { fields: ['id'] }, team: { fields: ['username'] } } }, {
     encodeValuesOnly: true // prettify URL

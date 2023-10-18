@@ -2,14 +2,28 @@
   <div v-if="results?.length == 0">
     Výsledky se zobrazí až po začátku hry.
   </div>
-  <ol v-else>
-    <li v-for="result in results" :key="result.teamName">
-      {{ result.teamName }} - {{ result.solved }} šifer v čase {{ formatTimestamp(result.totalTime) }}
-    </li>
-  </ol>
+  <table v-else class="u-full-width">
+    <thead>
+      <tr>
+        <th>Pořadí</th>
+        <th>Tým</th>
+        <th>Šifry</th>
+        <th>Čas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(result, i) in results" :key="result.teamName">
+        <td>{{ i+1 }}.</td>
+        <td>{{ result.teamName }}</td>
+        <td>{{ result.solved }}</td>
+        <td>{{ formatTimestamp(result.totalTime) }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 <script setup lang="ts">
 const { data: results } = await useFetch<any[]>('/api/results')
+
 function formatTimestamp (dateString: string): string {
   const date = new Date(dateString)
   const daysInHours = (date.getDate() - 1) * 24

@@ -11,7 +11,7 @@
           <NuxtLink v-if="gameStarted && !gameFinished && authStore.team" to="/hra" class="menu-item">
             hra
           </NuxtLink>
-          <NuxtLink v-if="gameStarted && authStore.team" to="/vysledky" class="menu-item">
+          <NuxtLink v-if="gameStarted" to="/vysledky" class="menu-item">
             výsledky
           </NuxtLink>
           <NuxtLink v-if="gameStarted && authStore.team" to="/vase-akce" class="menu-item">
@@ -37,7 +37,7 @@ const menuItems: Array<Record<string, string>> = [
   { href: '/pravidla', text: 'pravidla' }
 ]
 
-if (!registrationFinished) {
+if (!registrationFinished && !gameStarted) {
   menuItems.push({ href: '/registrace', text: 'registrace' })
 }
 
