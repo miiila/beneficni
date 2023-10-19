@@ -103,7 +103,7 @@ async function solvePuzzle (puzzleStateId: number): Promise<void> {
     if (e.statusCode === 400) {
       const actions  = await $fetch<any[]>('/api/team-actions', { headers: { Authorization: `Bearer ${authStore.jwt}` } })
       const failedActions = actions.filter((action) => action.puzzleId === puzzle.id && action.action === "failed").sort((a: any, b: any) => b.id - a.id)
-      if (failedActions.length > 2) {
+      if (failedActions.length >= 2) {
         nextAttempt.value = new Date(new Date(failedActions[0].timestamp).setMinutes(new Date(failedActions[0].timestamp).getMinutes() + 10))
         checkNextAttempt()
       }

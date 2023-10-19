@@ -24,8 +24,7 @@ export default defineEventHandler(async (event) => {
       return actions
     }, {})
     const puzzles: Puzzle[] = puzzlesRaw.puzzles_teams.map((puzzleState: any) => {
-      const failedActions = teamActions[puzzleState.puzzle.id].filter((action: any) => action.action  === 'failed').sort((a: any, b: any) => b.id - a.id)
-      const nextAttempt = new Date(failedActions[0].timestamp).setMinutes(new Date(failedActions[0].timestamp).getMinutes() + 10)
+      const failedActions = (teamActions[puzzleState.puzzle.id] ?? []).filter((action: any) => action.action  === 'failed').sort((a: any, b: any) => b.id - a.id)
       return {
         id: puzzleState.puzzle.id,
         stateId: puzzleState.id,
@@ -34,8 +33,8 @@ export default defineEventHandler(async (event) => {
         description: puzzleState.puzzle.description ?? '',
         state: puzzleState.state,
         solution: puzzleState.state === 'solved' ? puzzleState.puzzle.solution : '',
-        nextAttempt: failedActions.length > 2 ?  nextAttempt : undefined,
-        actions: teamActions[puzzleState.puzzle.id].reduce((actions: any, action: any) => {
+        nextAttempt: failedActions.length >= 2 ?  new Date(failedActions[0].timestamp).setMinutes(new Date(failedActions[0].timestamp).getMinutes() + 10) : undefined,
+        actions: (teamActions[puzzleState.puzzle.id] ?? []).reduce((actions: any, action: any) => {
           actions[action.action] = action.timestamp
           return actions
         }, {})
