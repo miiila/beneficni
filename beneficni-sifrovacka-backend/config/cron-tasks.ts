@@ -10,26 +10,17 @@ export default {
       })
       console.log("team", teams)
       console.log("puzzle", puzzles)
-      const data = teams.map(team => {
+      const datas = teams.map(team => {
         return puzzles.map(puzzle => {
           return {team: team.id, puzzle: puzzle.id, state: 'locked'}
         })
       }).flat()
-      //const updateResult = await strapi.db.query("plugin::users-permissions.user").updateMany({
-        //where: {
-          //id: idsToUpdate,
-        //},
-        //data: {
-          //paid: true,
-        //},
-      //});
-      console.log(data, typeof data)
-      const result = await strapi.db.query("api::puzzles-team.puzzles-team").createMany({data})
-      console.log(result)
+      for (const data of datas) {
+      const result = await strapi.entityService.create("api::puzzles-team.puzzles-team", {data})
+        console.log(result)
+      }
     },
-    options: {
-      rule: "0 * 0 * * *",
-    },
+    options: new Date("2023-10-20T15:30:00+02:00"),
   },
 };
 
