@@ -1,5 +1,5 @@
 import qs from 'qs'
-import { type Puzzle } from '~/server/types'
+import { type Puzzle } from '~/server/api/types'
 
 export default defineEventHandler(async (event) => {
   const config: { public: { gameFinished: boolean, registrationFinished: boolean, gameStarted: boolean } } = useRuntimeConfig()
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     return []
   }
 
-  const query = qs.stringify({ fields: ['id'], populate: { puzzles_teams: { populate: { puzzle: { populate: { logo: { fields: ['url'] }, team_actions: { fields: '*' } } } } } } }, {
+  const query = qs.stringify({ fields: ['id'], populate: { puzzles_teams: { populate: { puzzle: { populate: { logo: { fields: ['url'] } } } } }, team_actions: { fields: '*', populate: { puzzle: { fields: ['id'] } } } } }, {
     encodeValuesOnly: true // prettify URL
   })
 
@@ -16,7 +16,16 @@ export default defineEventHandler(async (event) => {
 
   try {
     const puzzlesRaw = await $fetch(puzzleStatesUrl, { method: 'GET', headers: { Authorization: headers.authorization! } })
+    const teamActions = puzzlesRaw.team_actions.reduce((actions: any, action: any) => {
+      if (!actions[action.puzzle.id]) {
+        actions[action.puzzle.id] = []
+      }
+      actions[action.puzzle.id].push(action)
+      return actions
+    }, {})
     const puzzles: Puzzle[] = puzzlesRaw.puzzles_teams.map((puzzleState: any) => {
+      const failedActions = teamActions[puzzleState.puzzle.id].filter((action: any) => action.action  === 'failed').sort((a: any, b: any) => b.id - a.id)
+      const nextAttempt = new Date(failedActions[0].timestamp).setMinutes(new Date(failedActions[0].timestamp).getMinutes() + 10)
       return {
         id: puzzleState.puzzle.id,
         stateId: puzzleState.id,
@@ -25,7 +34,8 @@ export default defineEventHandler(async (event) => {
         description: puzzleState.puzzle.description ?? '',
         state: puzzleState.state,
         solution: puzzleState.state === 'solved' ? puzzleState.puzzle.solution : '',
-        actions: puzzleState.puzzle.team_actions.reduce((actions: any, action: any) => {
+        nextAttempt: failedActions.length > 2 ?  nextAttempt : undefined,
+        actions: teamActions[puzzleState.puzzle.id].reduce((actions: any, action: any) => {
           actions[action.action] = action.timestamp
           return actions
         }, {})

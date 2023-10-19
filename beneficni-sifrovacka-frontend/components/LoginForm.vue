@@ -49,7 +49,7 @@ async function login () {
     if (err.status === 400) {
       failedLogin.value = true
     }
-    console.log(err)
+    console.error(err)
   }
 }
 </script>
