@@ -14,7 +14,7 @@
   "attributes": {
     "username": {
       "type": "string",
-      "minLength": 3,
+      "minLength": 1,
       "unique": true,
       "configurable": false,
       "required": true
