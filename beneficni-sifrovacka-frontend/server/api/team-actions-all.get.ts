@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       if (!stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id]) {
         stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id] = []
       }
-      stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id].push({action: teamAction.attributes.action, timestamp: teamAction.attributes.timestamp})
+      stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id].push({action: teamAction.attributes.action, timestamp: teamAction.attributes.timestamp, payload: teamAction.attributes.payload})
       if (teamAction.attributes.action === 'solved') {
         stats[teamAction.attributes.team.data.attributes.username].solved++
         const unlockTimestamp = stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id].find((action: any) => action.action === 'unlocked')?.timestamp
