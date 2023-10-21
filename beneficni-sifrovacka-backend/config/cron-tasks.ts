@@ -8,7 +8,7 @@ export default {
       const puzzles = await strapi.db.query("api::puzzle.puzzle").findMany({
         select: ['id'],
       })
-      const teams = [{id: 89}, {id: 90}]
+      const teams = [{id: 91}]
       console.log("team", teams)
       console.log("puzzle", puzzles)
       const datas = teams.map(team => {
@@ -21,7 +21,7 @@ export default {
         console.log(result)
       }
     },
-    options: new Date("2023-10-21T10:10:00+02:00"),
+    options: new Date("2023-10-21T13:35:00+02:00"),
   },
 };
 
