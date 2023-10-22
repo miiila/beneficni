@@ -18,12 +18,12 @@ export default defineNuxtConfig({
     pageMap: {
       pravidla: 1,
       'o-barce': 2,
-      main: 3
+      main: 4
     },
     public: {
-      registrationFinished: false,
-      gameFinished: false,
-      gameStarted: false
+      registrationFinished: true,
+      gameFinished: true,
+      gameStarted: true
     }
   },
   app: {

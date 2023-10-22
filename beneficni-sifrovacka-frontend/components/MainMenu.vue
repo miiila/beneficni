@@ -11,7 +11,10 @@
           <NuxtLink v-if="gameStarted && !gameFinished && authStore.team" to="/hra" class="menu-item">
             hra
           </NuxtLink>
-          <NuxtLink v-if="gameStarted" to="/vysledky" class="menu-item">
+          <NuxtLink v-if="gameFinished" to="/sifry" class="menu-item">
+            Šifry
+          </NuxtLink>
+          <NuxtLink v-if="gameStarted || gameFinished" to="/vysledky" class="menu-item">
             výsledky
           </NuxtLink>
           <NuxtLink v-if="gameStarted && authStore.team" to="/vase-akce" class="menu-item">
@@ -44,9 +47,6 @@ if (!registrationFinished && !gameStarted) {
 menuItems.push({ href: '/tymy', text: 'týmy' })
 menuItems.push({ href: '/tym', text: 'Váš tým' })
 
-if (gameFinished) {
-  menuItems.push({ href: '/sifry', text: 'šifry' }, { href: '/statistiky', text: 'statistiky' }, { href: '/vysledky', text: 'výsledky' })
-}
 
 </script>
 
