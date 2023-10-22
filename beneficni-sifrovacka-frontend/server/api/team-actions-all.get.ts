@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   if (!config.public.gameStarted) {
     return []
   }
-  const teamActionsQuery = qs.stringify({ fields: '*', populate: { puzzle: { fields: ['id'] }, team: { fields: ['id', 'username'] } } }, {
+  const teamActionsQuery = qs.stringify({sort: "id", fields: '*', populate: { puzzle: { fields: ['id'] }, team: { fields: ['id', 'username'] } } }, {
     encodeValuesOnly: true // prettify URL
   })
   const puzzlesQuery = qs.stringify({ fields: 'id', populate: { logo: { fields: 'url' } } }, {
@@ -20,18 +20,35 @@ export default defineEventHandler(async (event) => {
 
 
     const teamActions = teamActionsRaw.data.reduce((stats, teamAction: any) => {
-      if (!stats[teamAction.attributes.team.data.attributes.username]) {
-        stats[teamAction.attributes.team.data.attributes.username] = {puzzles: {}, solved: 0, time: new Date(0).getTime()}
+      const teamName = teamAction.attributes.team.data.attributes.username;
+      if (!stats[teamName]) {
+        stats[teamName] = {puzzles: {}, solved: 0, time: new Date(0).getTime()}
       }
-      if (!stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id]) {
-        stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id] = []
+      const puzzleId = teamAction.attributes.puzzle.data.id;
+      if (!stats[teamName].puzzles[puzzleId]) {
+        stats[teamName].puzzles[puzzleId] = []
       }
-      stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id].push({action: teamAction.attributes.action, timestamp: teamAction.attributes.timestamp, payload: teamAction.attributes.payload})
+      // There might be duplicates because of race conditions, let's remove them, failed duplicates doesn't matter
+      if (teamAction.attributes.action === 'solved' || teamAction.attributes.action === 'unlocked') {
+        const existing = stats[teamName].puzzles[puzzleId].some((action) => {
+          return action.action === teamAction.attributes.action
+        })
+
+        if (existing) {
+          return stats
+        }
+      }
+      // if () {
+      //   // do not process duplicated action
+      //   return stats
+      // }
+      stats[teamName].puzzles[puzzleId].push({action: teamAction.attributes.action, timestamp: teamAction.attributes.timestamp, payload: teamAction.attributes.payload})
+
       if (teamAction.attributes.action === 'solved') {
-        stats[teamAction.attributes.team.data.attributes.username].solved++
-        const unlockTimestamp = stats[teamAction.attributes.team.data.attributes.username].puzzles[teamAction.attributes.puzzle.data.id].find((action: any) => action.action === 'unlocked')?.timestamp
+        stats[teamName].solved++
+        const unlockTimestamp = stats[teamName].puzzles[puzzleId].find((action: any) => action.action === 'unlocked')?.timestamp
         const solveTimestamp = teamAction.attributes.timestamp
-        stats[teamAction.attributes.team.data.attributes.username].time += new Date(solveTimestamp).getTime() - new Date(unlockTimestamp).getTime()
+        stats[teamName].time += new Date(solveTimestamp).getTime() - new Date(unlockTimestamp).getTime()
       }
       return stats
     }, {})

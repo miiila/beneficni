@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr v-for="actions, teamName in teamActions" :key="teamName">
-        <td>{{ teamName }} </td>
+        <td>{{ teamName }} <br /> {{ actions.solved }} šifer v čase {{ formatRelativeTimestamp(new Date(actions.time)) }} </td>
         <td v-for="i in 16" :key="teamName+i">
           <span v-if="isSolved(actions.puzzles[i])"> ✅ <br /> {{ getSolvedTimestamp(actions.puzzles[i]) }}</span>
           <span v-else-if="isUnlocked(actions.puzzles[i])"> 🔓 <br /> {{ getUnlockedTimestamp(actions.puzzles[i]) }}</span>
@@ -34,7 +34,7 @@ const teamActions = actions.teamActions = Object.fromEntries(Object.entries(acti
   if (a.solved > b.solved) {
     return -1
   }
-  return a.time - b.time
+  return new Date(a.time).getTime() - new Date(b.time).getTime()
 }))
 
 function formatTimestamp (d: string) {
@@ -68,7 +68,12 @@ function formatRelativeTimestamp(timeDiff?: Date) {
   if (!timeDiff) {
     return ''
   }
-  return `${String(timeDiff.getHours()).padStart(2,'0')}:${String(timeDiff.getMinutes()).padStart(2, '0')}:${String(timeDiff.getSeconds()).padStart(2, '0')}`
+  const daysInHours = (timeDiff.getDate() - 1) * 24
+  const minutes = String(timeDiff.getMinutes()).padStart(2, '0')
+  const seconds = String(timeDiff.getSeconds()).padStart(2, '0')
+  const hours = String(timeDiff.getHours() - 1 + daysInHours).padStart(2, '0')
+
+  return `${hours}:${minutes}:${seconds}`
 }
 
 </script>

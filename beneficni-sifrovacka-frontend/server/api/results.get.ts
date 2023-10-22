@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     return []
   }
 
-  const query = qs.stringify({ filters: { action: { $ne: 'failed' } }, populate: { puzzle: { fields: ['id'] }, team: { fields: ['username'] } } }, {
+  const query = qs.stringify({sort: 'id', filters: { action: { $ne: 'failed' } }, populate: { puzzle: { fields: ['id'] }, team: { fields: ['username'] } } }, {
     encodeValuesOnly: true // prettify URL
   })
   const puzzleStatesUrl = `${config.apiHost}/${config.apiBase}/team-actions?${query}`
@@ -23,7 +23,10 @@ export default defineEventHandler(async (event) => {
       if (!actions[teamName][puzzleId]) {
         actions[teamName][puzzleId] = {}
       }
-      actions[teamName][puzzleId][action.attributes.action] = new Date(action.attributes.timestamp)
+      // Prevent overriding duplicates in a case of race condition
+      if (!actions[teamName][puzzleId][action.attributes.action]) {
+        actions[teamName][puzzleId][action.attributes.action] = new Date(action.attributes.timestamp)
+      }
       return actions
     }, {})
 
