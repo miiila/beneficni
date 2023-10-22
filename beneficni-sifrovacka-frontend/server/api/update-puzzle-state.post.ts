@@ -3,6 +3,9 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const headers = getHeaders(event)
 
+  if (config.public.gameFinished) {
+    throw createError({ statusCode: 410, statusMessage: 'Hra už skončila.' })
+  }
   try {
     // Fetch puzzle - url neede for open state, solution for solved state
     const puzzleUrl = `${config.apiHost}/${config.apiBase}/puzzles/${body.puzzleId}`
