@@ -5,7 +5,7 @@
       <td class="solution">
       <div>
         <div><a :href="puzzle.url">Zadání</a></div>
-        <div @click="displaySolution = !displaySolution">
+        <div @click="displaySolution = !displaySolution" class="solution">
           <div class="arrow" :class="{rotated: displaySolution}">⏵</div><span> Řešení</span>
         </div>
         <div v-if= "displaySolution" v-html="puzzle.solutionDetails"></div>
@@ -44,9 +44,12 @@ td {
   vertical-align: top;
 }
 
+.solution {
+  cursor: pointer;
+}
+
 .arrow {
   display: inline-block;
-  cursor: pointer;
 }
 
 .rotated {

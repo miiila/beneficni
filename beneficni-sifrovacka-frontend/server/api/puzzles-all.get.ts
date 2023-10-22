@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     const puzzles: Puzzle[] = puzzlesRaw.data.map((puzzle: any) => {
       return {
         id: puzzle.id,
-        url: puzzle.url,
+        url: puzzle.attributes.url,
         logoUrl: `${config.apiHost}${puzzle.attributes.logo.data.attributes.url}` ?? '',
         description: puzzle.attributes.description ?? '',
         solution: puzzle.attributes.solution,
