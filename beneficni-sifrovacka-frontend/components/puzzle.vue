@@ -6,7 +6,7 @@
       <td><button @click="unlockPuzzle(puzzle.stateId)">Odemknout</button></td>
     </template>
     <template v-else-if="puzzleState === &quot;open&quot;">
-      <td>
+      <td class="puzzle-action">
         <div>
           <div><a :href="puzzleUrl">Zadání</a></div>
           <div>Odemčeno: {{ unlockTimestamp }}</div>

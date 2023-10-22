@@ -9,6 +9,7 @@ export interface Puzzle {
   state: 'locked' | 'open' | 'solved'
   actions: Record<'unlocked' | 'solved' | 'failed', Date>
   solution: string
+  solutionDetails: string
   nextAttempt: Date | undefined
 }
 
