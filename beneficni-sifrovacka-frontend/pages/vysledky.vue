@@ -5,7 +5,7 @@
     <tr>
       <th />
       <th v-for="puzzle in actions.puzzles" :key="puzzle.url">
-        <img :src="puzzle.logoUrl" width="30px" />
+        <img :src="puzzle.logoUrl" class="logoResults" />
       </th>
     </tr>
     </thead>
@@ -13,8 +13,9 @@
       <tr v-for="actions, teamName, index in teamActions" :key="teamName">
         <td>
           <span v-if="index == 0">🥇</span>
-          <span v-if="index == 1">🥈</span>
-          <span v-if="index == 2">🥉</span>
+          <span v-else-if="index == 1">🥈</span>
+          <span v-else-if="index == 2">🥉</span>
+          <span v-else>{{index+1}}. </span>
           <strong> {{ teamName }}</strong> <br /> {{ actions.solved }} šifer v čase {{ formatRelativeTimestamp(new Date(actions.time)) }} </td>
         <td v-for="i in 16" :key="teamName+i">
           <span v-if="isSolved(actions.puzzles[i])"> ✅ <br /> {{ getSolvedTimestamp(actions.puzzles[i]) }}</span>
@@ -89,5 +90,9 @@ function formatRelativeTimestamp(timeDiff?: Date) {
   }
   .success {
     color: #1a9e21;
+  }
+
+  .logoResults {
+    width: 30px;
   }
 </style>

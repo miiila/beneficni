@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td><img :src="puzzle.logoUrl"></td>
+    <td><img :src="puzzle.logoUrl" class="logoPuzzle"></td>
     <td><span v-html="puzzle.description" /></td>
       <td class="solution">
       <div>
@@ -51,5 +51,9 @@ td {
 
 .rotated {
   transform: rotate(90deg);
+}
+
+.logoPuzzle {
+  width: 50px;
 }
 </style>
